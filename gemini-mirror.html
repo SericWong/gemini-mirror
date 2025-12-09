@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini AI | 现代科技人工智能体验</title>
+    <meta name="description" content="体验现代科技风格的Gemini人工智能模型，包括Gemini 2.5、Gemini 3.0和绘图模型Gemini Nano Banana。简约未来主义设计，融合先进AI技术。">
+    <meta name="keywords" content="Gemini, Gemini 2.5, Gemini 3.0, Gemini Nano Banana, 人工智能, AI模型, 现代科技, 简约设计, Google AI">
+    <meta name="author" content="Gemini.AIBOX365">
+    
+    <!-- 现代科技风格资源 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/ScrollTrigger.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Gemini现代科技Tailwind配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gemini: {
+                            primary: '#4285F4',
+                            secondary: '#34A853',
+                            accent: '#FBBC05',
+                            dark: '#1A1A1A',
+                            light: '#F8F9FA',
+                            gray: '#5F6368',
+                            blue: '#1A73E8'
+                        }
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
+                        'slide-up': 'slideUp 0.8s ease-out',
+                        'fade-in': 'fadeIn 1s ease-in'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' }
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { 
+                                boxShadow: '0 0 20px rgba(66, 133, 244, 0.3)',
+                                transform: 'scale(1)'
+                            },
+                            '50%': { 
+                                boxShadow: '0 0 40px rgba(66, 133, 244, 0.6)',
+                                transform: 'scale(1.02)'
+                            }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(30px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        }
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Gemini现代科技自定义样式 -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1A1A1A 0%, #2D2D2D 50%, #1A1A1A 100%);
+            color: #F8F9FA;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        .gemini-bg {
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(66, 133, 244, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(52, 168, 83, 0.1) 0%, transparent 50%),
+                linear-gradient(135deg, #1A1A1A 0%, #2D2D2D 50%, #1A1A1A 100%);
+            background-attachment: fixed;
+            background-size: cover;
+        }
+        
+        /* 添加动态粒子效果 */
+        .gemini-bg::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(66, 133, 244, 0.05) 0%, transparent 70%),
+                radial-gradient(circle at 80% 70%, rgba(251, 188, 5, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+            animation: subtleShift 10s ease-in-out infinite alternate;
+        }
+        
+        @keyframes subtleShift {
+            0% {
+                opacity: 0.3;
+                filter: hue-rotate(0deg);
+            }
+            100% {
+                opacity: 0.7;
+                filter: hue-rotate(180deg);
+            }
+        }
+        
+        .gemini-text {
+            color: #4285F4;
+            text-shadow: 0 0 20px rgba(66, 133, 244, 0.5);
+        }
+        
+        .gemini-border {
+            border: 1px solid rgba(66, 133, 244, 0.3);
+            backdrop-filter: blur(10px);
+            background: rgba(26, 26, 26, 0.8);
+        }
+        
+        .gemini-card {
+            background: rgba(26, 26, 26, 0.6);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(66, 133, 244, 0.2);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .gemini-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(66, 133, 244, 0.2);
+            border-color: rgba(66, 133, 244, 0.5);
+        }
+        
+        .gemini-button {
+            background: linear-gradient(135deg, #4285F4, #FBBC05);
+            border: none;
+            color: white;
+            font-weight: 600;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .gemini-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .gemini-button:hover::before {
+            left: 100%;
+        }
+        
+        .gemini-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(66, 133, 244, 0.4);
+        }
+        
+        .particle {
+            position: absolute;
+            background: rgba(66, 133, 244, 0.3);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+            pointer-events: none;
+        }
+        
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            padding: 40px 0;
+        }
+        
+        .tech-node {
+            background: rgba(45, 45, 45, 0.6);
+            border: 1px solid rgba(66, 133, 244, 0.2);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .tech-node:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(66, 133, 244, 0.2);
+            border-color: rgba(66, 133, 244, 0.5);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #4285F4, #34A853, #FBBC05);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        @media (max-width: 768px) {
+            .gemini-bg {
+                background: 
+                    radial-gradient(ellipse at 30% 20%, rgba(66, 133, 244, 0.08) 0%, transparent 60%),
+                    radial-gradient(ellipse at 70% 80%, rgba(52, 168, 83, 0.08) 0%, transparent 60%),
+                    linear-gradient(135deg, #1A1A1A 0%, #2D2D2D 50%, #1A1A1A 100%);
+            }
+            
+            .gemini-bg::before {
+                background: 
+                    radial-gradient(circle at 30% 40%, rgba(66, 133, 244, 0.03) 0%, transparent 80%),
+                    radial-gradient(circle at 70% 60%, rgba(251, 188, 5, 0.03) 0%, transparent 80%);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .gemini-bg {
+                background: 
+                    radial-gradient(ellipse at 40% 30%, rgba(66, 133, 244, 0.1) 0%, transparent 70%),
+                    linear-gradient(135deg, #1A1A1A 0%, #2D2D2D 50%, #1A1A1A 100%);
+            }
+            
+            .gemini-bg::before {
+                background: 
+                    radial-gradient(circle at 50% 50%, rgba(66, 133, 244, 0.02) 0%, transparent 90%);
+            }
+        }
+    </style>
+</head>
+
+<body class="font-inter gemini-bg">
+    <!-- 粒子背景效果 -->
+    <div id="particles"></div>
+    
+    <!-- Gemini现代科技导航栏 -->
+    <nav id="navbar" class="fixed w-full top-0 z-50 transition-all duration-500 py-4 bg-gemini-dark/80 backdrop-blur-lg">
+        <div class="container mx-auto px-6">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <a href="https://chat.aimirror123.com" target="_blank" class="flex items-center space-x-3 group">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-gemini-primary to-gemini-accent flex items-center justify-center gemini-border">
+                        <span class="text-white font-bold text-xl">G</span>
+                    </div>
+                    <span class="text-2xl font-bold gradient-text font-mono">Gemini AI</span>
+                </a>
+                
+                <!-- 桌面端导航 -->
+                <div class="hidden lg:flex space-x-8">
+                    <a href="#features" class="text-gemini-gray hover:text-gemini-primary transition-all duration-300 relative group font-mono">
+                        <span class="relative z-10">核心特性</span>
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gemini-primary transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#models" class="text-gemini-gray hover:text-gemini-primary transition-all duration-300 relative group font-mono">
+                        <span class="relative z-10">AI模型</span>
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gemini-primary transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#tech" class="text-gemini-gray hover:text-gemini-primary transition-all duration-300 relative group font-mono">
+                        <span class="relative z-10">技术架构</span>
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gemini-primary transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#stats" class="text-gemini-gray hover:text-gemini-primary transition-all duration-300 relative group font-mono">
+                        <span class="relative z-10">性能数据</span>
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gemini-primary transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                </div>
+                
+                <!-- 行动按钮 -->
+                <div class="hidden lg:flex space-x-4">
+                    <a href="https://chat.aimirror123.com" target="_blank" class="px-8 py-3 gemini-button rounded-lg font-mono text-sm uppercase tracking-wider">
+                        立即体验
+                    </a>
+                </div>
+                
+                <!-- 移动端菜单按钮 -->
+                <button id="menu-toggle" class="lg:hidden text-xl gemini-button w-12 h-12 rounded-lg flex items-center justify-center">
+                    <i class="fa fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- 移动端菜单 -->
+        <div id="mobile-menu" class="lg:hidden hidden gemini-card mt-4 mx-6 rounded-lg">
+            <div class="p-6 space-y-4">
+                <a href="#features" class="block text-gemini-gray hover:text-gemini-primary transition-colors py-2 font-mono">核心特性</a>
+                <a href="#models" class="block text-gemini-gray hover:text-gemini-primary transition-colors py-2 font-mono">AI模型</a>
+                <a href="#tech" class="block text-gemini-gray hover:text-gemini-primary transition-colors py-2 font-mono">技术架构</a>
+                <a href="#stats" class="block text-gemini-gray hover:text-gemini-primary transition-colors py-2 font-mono">性能数据</a>
+                <a href="https://chat.aimirror123.com" target="_blank" class="block px-6 py-3 gemini-button rounded-lg text-center font-mono text-sm uppercase tracking-wider mt-4">立即体验</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Gemini现代科技英雄区域 -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <div class="max-w-6xl mx-auto">
+                <h1 class="text-5xl md:text-7xl font-black mb-6 gradient-text font-mono animate-slide-up">
+                    Gemini AI
+                </h1>
+                <p class="text-xl md:text-2xl text-gemini-gray mb-8 leading-relaxed animate-slide-up" style="animation-delay: 0.2s;">
+                    <span class="gradient-text">Google最新一代</span>人工智能模型
+                </p>
+                <div class="flex flex-col sm:flex-row gap-6 justify-center animate-slide-up" style="animation-delay: 0.4s;">
+                    <a href="https://chat.aimirror123.com" target="_blank" class="px-10 py-4 gemini-button rounded-lg font-mono text-lg uppercase tracking-wider">
+                        🚀 立即体验
+                    </a>
+                    <a href="#features" class="px-10 py-4 border border-gemini-primary text-gemini-primary rounded-lg hover:bg-gemini-primary/10 transition-all duration-300 font-mono uppercase tracking-wider">
+                        🔍 探索特性
+                    </a>
+                </div>
+                
+                <!-- 科技特性展示 -->
+                <div class="tech-grid mt-20">
+                    <div class="tech-node animate-fade-in" style="animation-delay: 0.6s;">
+                        <i class="fa fa-rocket text-gemini-primary text-4xl mb-4"></i>
+                        <h3 class="text-xl font-bold gradient-text mb-3">Gemini 2.5</h3>
+                        <p class="text-gemini-gray text-sm">最新一代多模态AI模型，支持文本、图像、音频处理</p>
+                    </div>
+                    <div class="tech-node animate-fade-in" style="animation-delay: 0.8s;">
+                        <i class="fa fa-brain text-gemini-secondary text-4xl mb-4"></i>
+                        <h3 class="text-xl font-bold gradient-text mb-3">Gemini 3.0</h3>
+                        <p class="text-gemini-gray text-sm">革命性架构升级，推理能力大幅提升</p>
+                    </div>
+                    <div class="tech-node animate-fade-in" style="animation-delay: 1.0s;">
+                        <i class="fa fa-palette text-gemini-accent text-4xl mb-4"></i>
+                        <h3 class="text-xl font-bold gradient-text mb-3">Gemini Nano Banana</h3>
+                        <p class="text-gemini-gray text-sm">专业绘图模型，创意图像生成与编辑</p>
+                    </div>
+                    <div class="tech-node animate-fade-in" style="animation-delay: 1.2s;">
+                        <i class="fa fa-shield-alt text-gemini-blue text-4xl mb-4"></i>
+                        <h3 class="text-xl font-bold gradient-text mb-3">安全可靠</h3>
+                        <p class="text-gemini-gray text-sm">企业级数据加密与隐私保护</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 向下指示箭头 -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2">
+            <div class="gemini-card w-16 h-16 rounded-full flex items-center justify-center animate-bounce">
+                <i class="fa fa-chevron-down text-gemini-primary text-xl"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- 核心特性区域 -->
+    <section id="features" class="py-24 relative">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-black mb-4 gradient-text font-mono">核心特性</h2>
+                <p class="text-gemini-gray text-lg max-w-2xl mx-auto">Gemini AI集成了Google最先进的人工智能技术，为您提供卓越的智能体验</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="gemini-card p-8 text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-gemini-primary to-gemini-secondary rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fa fa-comments text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 gradient-text">智能对话</h3>
+                    <p class="text-gemini-gray">自然流畅的多轮对话，理解上下文语境，提供精准回答</p>
+                </div>
+                
+                <div class="gemini-card p-8 text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-gemini-secondary to-gemini-accent rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fa fa-code text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 gradient-text">代码生成</h3>
+                    <p class="text-gemini-gray">支持多种编程语言，智能代码补全和错误检测功能</p>
+                </div>
+                
+                <div class="gemini-card p-8 text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-gemini-accent to-gemini-primary rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fa fa-book text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 gradient-text">知识问答</h3>
+                    <p class="text-gemini-gray">基于海量知识库，提供准确可靠的信息和解答</p>
+                </div>
+                
+                <div class="gemini-card p-8 text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-gemini-primary to-gemini-blue rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fa fa-language text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 gradient-text">多语言支持</h3>
+                    <p class="text-gemini-gray">支持中英文及其他多种语言的无缝切换和翻译</p>
+                </div>
+                
+                <div class="gemini-card p-8 text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-gemini-blue to-gemini-secondary rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fa fa-cogs text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 gradient-text">定制化服务</h3>
+                    <p class="text-gemini-gray">根据用户需求提供个性化的模型调优和功能定制</p>
+                </div>
+                
+                <div class="gemini-card p-8 text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-gemini-secondary to-gemini-blue rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fa fa-image text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 gradient-text">图像生成</h3>
+                    <p class="text-gemini-gray">Gemini Nano Banana专业绘图模型，创意图像生成与编辑</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI模型展示区域 -->
+    <section id="models" class="py-24 relative bg-gemini-dark/50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-black mb-4 gradient-text font-mono">AI模型系列</h2>
+                <p class="text-gemini-gray text-lg max-w-2xl mx-auto">Google Gemini系列模型，覆盖不同应用场景和性能需求</p>
+            </div>
+            
+            <div class="grid lg:grid-cols-3 gap-8">
+                <div class="gemini-card p-8 text-center">
+                    <div class="w-20 h-20 bg-gradient-to-br from-gemini-primary to-gemini-secondary rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-white font-bold text-2xl">2.5</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 gradient-text">Gemini 2.5</h3>
+                    <p class="text-gemini-gray mb-6">最新一代多模态AI模型，支持文本、图像、音频处理，推理能力大幅提升</p>
+                    <div class="space-y-2 text-left">
+                        <div class="flex items-center text-sm">
+                            <i class="fa fa-check text-gemini-secondary mr-2"></i>
+                            <span>多模态理解能力</span>
+                        </div>
+                        <div class="flex items-center text-sm">
+                            <i class="fa fa-check text-gemini-secondary mr-2"></i>
+                            <span>实时推理优化</span>
+                        </div>
+                        <div class="flex items-center text-sm">
+                            <i class="fa fa-check text-gemini-secondary mr-2"></i>
+                            <span>大规模知识库</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gemini-card p-8 text-center">
+                    <div class="w-20 h-20 bg-gradient-to-br from-gemini-accent to-gemini-primary rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-white font-bold text-2xl">3.0</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 gradient-text">Gemini 3.0</h3>
+                    <p class="text-gemini-gray mb-6">革命性架构升级，推理能力大幅提升，支持更复杂的任务处理</p>
+                    <div class="space-y-2 text-left">
+                        <div class="flex items-center text-sm">
+                            <i class="fa fa-check text-gemini-secondary mr-2"></i>
+                            <span>架构革命性升级</span>
+                        </div>
+                        <div class="flex items-center text-sm">
+                            <i class="fa fa-check text-gemini-secondary mr-2"></i>
+                            <span>复杂任务处理</span>
+                        </div>
+                        <div class="flex items-center text-sm">
+                            <i class="fa fa-check text-gemini-secondary mr-2"></i>
+                            <span>智能推理优化</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gemini-card p-8 text-center">
+                    <div class="w-20 h-20 bg-gradient-to-br from-gemini-blue to-gemini-accent rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-white font-bold text-2xl">NB</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 gradient-text">Gemini Nano Banana</h3>
+                    <p class="text-gemini-gray mb-6">专业绘图模型，创意图像生成与编辑，支持多种艺术风格</p>
+                    <div class="space-y-2 text-left">
+                        <div class="flex items-center text-sm">
+                            <i class="fa fa-check text-gemini-secondary mr-2"></i>
+                            <span>创意图像生成</span>
+                        </div>
+                        <div class="flex items-center text-sm">
+                            <i class="fa fa-check text-gemini-secondary mr-2"></i>
+                            <span>多种艺术风格</span>
+                        </div>
+                        <div class="flex items-center text-sm">
+                            <i class="fa fa-check text-gemini-secondary mr-2"></i>
+                            <span>专业绘图工具</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技术架构区域 -->
+    <section id="tech" class="py-24 relative">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-black mb-4 gradient-text font-mono">技术架构</h2>
+                <p class="text-gemini-gray text-lg max-w-2xl mx-auto">基于Google最先进的AI技术栈，构建稳定高效的智能系统</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h3 class="text-2xl font-bold mb-6 gradient-text">核心技术栈</h3>
+                    <div class="space-y-4">
+                        <div class="gemini-card p-6">
+                            <h4 class="font-bold text-lg mb-2">Transformer架构</h4>
+                            <p class="text-gemini-gray text-sm">基于最新的Transformer架构，支持大规模并行计算和高效推理</p>
+                        </div>
+                        <div class="gemini-card p-6">
+                            <h4 class="font-bold text-lg mb-2">多模态融合</h4>
+                            <p class="text-gemini-gray text-sm">支持文本、图像、音频等多种模态数据的统一处理和融合</p>
+                        </div>
+                        <div class="gemini-card p-6">
+                            <h4 class="font-bold text-lg mb-2">分布式训练</h4>
+                            <p class="text-gemini-gray text-sm">大规模分布式训练系统，支持万亿参数模型的训练和优化</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="relative">
+                    <div class="gemini-card p-8 text-center">
+                        <canvas id="techChart" width="400" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 性能数据区域 -->
+    <section id="stats" class="py-24 relative bg-gemini-dark/50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-black mb-4 gradient-text font-mono">性能数据</h2>
+                <p class="text-gemini-gray text-lg max-w-2xl mx-auto">Gemini系列模型在各项基准测试中表现卓越</p>
+            </div>
+            
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="gemini-card p-6 text-center">
+                    <div class="text-4xl font-bold gradient-text mb-2">98.7%</div>
+                    <p class="text-gemini-gray">准确率</p>
+                </div>
+                <div class="gemini-card p-6 text-center">
+                    <div class="text-4xl font-bold gradient-text mb-2">2.3s</div>
+                    <p class="text-gemini-gray">平均响应时间</p>
+                </div>
+                <div class="gemini-card p-6 text-center">
+                    <div class="text-4xl font-bold gradient-text mb-2">99.9%</div>
+                    <p class="text-gemini-gray">可用性</p>
+                </div>
+                <div class="gemini-card p-6 text-center">
+                    <div class="text-4xl font-bold gradient-text mb-2">1.2B</div>
+                    <p class="text-gemini-gray">日处理请求</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="py-12 border-t border-gemini-gray/20">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center space-x-3 mb-6 md:mb-0">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-gemini-primary to-gemini-accent flex items-center justify-center">
+                        <span class="text-white font-bold text-sm">G</span>
+                    </div>
+                    <span class="text-lg font-bold gradient-text font-mono">Gemini AI</span>
+                </div>
+                
+                <div class="flex space-x-6">
+                    <a href="https://chat.aimirror123.com" target="_blank" class="text-gemini-gray hover:text-gemini-primary transition-colors">
+                        立即体验
+                    </a>
+                    <a href="#features" class="text-gemini-gray hover:text-gemini-primary transition-colors">
+                        核心特性
+                    </a>
+                    <a href="#models" class="text-gemini-gray hover:text-gemini-primary transition-colors">
+                        AI模型
+                    </a>
+                </div>
+            </div>
+            
+            <div class="mt-8 text-center text-gemini-gray text-sm">
+                <p>&copy; 2024 Gemini.AIBOX365. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript功能 -->
+    <script>
+        // 移动端菜单切换
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('bg-gemini-dark/95');
+            } else {
+                navbar.classList.remove('bg-gemini-dark/95');
+            }
+        });
+
+        // 粒子背景效果
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.width = Math.random() * 4 + 1 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.opacity = Math.random() * 0.5 + 0.1;
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // 技术架构图表
+        function initTechChart() {
+            const ctx = document.getElementById('techChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Transformer架构', '多模态融合', '分布式训练', '推理优化'],
+                    datasets: [{
+                        data: [35, 25, 20, 20],
+                        backgroundColor: [
+                            '#4285F4',
+                            '#34A853',
+                            '#FBBC05',
+                            '#EA4335'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '60%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: '#F8F9FA',
+                                font: {
+                                    family: 'Inter'
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            initTechChart();
+            
+            // 初始化GSAP动画
+            gsap.registerPlugin(ScrollTrigger);
+            
+            // 为所有卡片添加滚动动画
+            gsap.utils.toArray('.gemini-card').forEach(card => {
+                gsap.from(card, {
+                    scrollTrigger: {
+                        trigger: card,
+                        start: 'top 80%',
+                        end: 'bottom 20%',
+                        toggleActions: 'play none none reverse'
+                    },
+                    y: 50,
+                    opacity: 0,
+                    duration: 1,
+                    ease: 'power3.out'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
